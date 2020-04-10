@@ -1,0 +1,7 @@
+Content-Type=application/x-fictionbook+xml
+Content-Length=2092
+Content-Encoding=UTF-8
+Extracted-Text=Война и мир
+Title=Война и мир
+# cat file.fb2 | openssl sha1
+SHA-1=3a0a098237d2e08349ba722e00f93844dd323901

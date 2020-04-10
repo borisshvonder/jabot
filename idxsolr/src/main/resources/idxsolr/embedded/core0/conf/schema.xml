@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<schema name="idxsolr" version="0.1">
+	<types>
+		<fieldtype name="binary" class="solr.BinaryField" />
+		
+		<!-- Completely untokenized field -->
+		<fieldtype name="unt" class="solr.StrField" />
+		
+		<fieldType name="boolean" class="solr.BoolField" />
+		<fieldType name="int" class="solr.TrieIntField" />
+		<fieldType name="long" class="solr.TrieLongField" />
+		<fieldType name="float" class="solr.TrieFloatField" />
+		<fieldType name="double" class="solr.TrieDoubleField" />
+		<fieldType name="date" class="solr.TrieDateField" />
+		<fieldType name="random" class="solr.RandomSortField" />
+
+		<fieldType name="str" class="solr.TextField">
+			<analyzer type="index">
+				<tokenizer class="org.apache.lucene.analysis.icu.segmentation.ICUTokenizerFactory" />
+				<filter class="org.apache.lucene.analysis.miscellaneous.WordDelimiterFilterFactory"
+					catenateWords="1" catenateNumbers="1"
+					generateWordParts="1"
+					generateNumberParts="1" 
+					stemEnglishPossessive="1"
+					types="wdfftypes.txt">
+				</filter>
+				<filter class="org.apache.lucene.analysis.icu.ICUFoldingFilterFactory" />
+				<filter class="org.apache.lucene.analysis.icu.ICUTransformFilterFactory" id="Traditional-Simplified" />
+				<filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
+			</analyzer>
+			<analyzer type="query">
+				<tokenizer class="org.apache.lucene.analysis.icu.segmentation.ICUTokenizerFactory"/>
+				<filter class="org.apache.lucene.analysis.miscellaneous.WordDelimiterFilterFactory"
+					generateWordParts="1" generateNumberParts="1" 
+					stemEnglishPossessive="1"
+					types="wdfftypes.txt">
+				</filter>
+				<filter class="org.apache.lucene.analysis.icu.ICUFoldingFilterFactory" />
+				<filter class="org.apache.lucene.analysis.icu.ICUTransformFilterFactory" id="Traditional-Simplified" />
+				<filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
+				<filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true" />
+			</analyzer>
+		</fieldType>
+		
+		<fieldType name="strru" class="solr.TextField">
+			<analyzer class="org.apache.lucene.analysis.ru.RussianAnalyzer" stopwords="stopwords.txt" />
+		</fieldType>
+
+		<fieldtype name="ignored" stored="false" indexed="false" class="solr.StrField" />
+	</types>
+
+	<fields>
+		<!-- SolrCloud support -->
+		<field name="_version_" type="long" indexed="true" stored="true" multiValued="false"/>
+		
+		<!-- Primary key -->
+		<field name="pk" type="unt" indexed="true" stored="true" required="true" multiValued="false"/>
+
+		<!-- Document size in bytes (approximate) -->
+		<field name="size" type="int" indexed="true" stored="true" required="false" multiValued="false"/>
+
+		<!-- All values that don't match other types and/or copyfield goes here -->
+		<field name="text" type="str" indexed="true" stored="false" multiValued="true" />
+		
+		<!-- All metadata fields are copied in here -->
+		<field name="metadata" type="str" indexed="true" stored="false" multiValued="true" />
+
+		<!-- All metadata fields are copied in here -->
+		<field name="metadataRu" type="strru" indexed="true" stored="false" multiValued="true" />
+
+		<!-- 
+			*_<type> 	- Indexed, non-stored type
+			*_<type>_s	- Stored, non-indexed type
+			*_<type>_f	- Srored, indexed type
+		 -->
+		<dynamicField name="*_binary" type="binary" indexed="true" stored="false" multiValued="false"/>
+		<dynamicField name="*_binary_s" type="binary" indexed="false" stored="true" multiValued="false"/>
+		<dynamicField name="*_binary_f" type="binary" indexed="true" stored="true" multiValued="false"/>
+		<dynamicField name="*_binary_mv" type="binary" indexed="true" stored="false" multiValued="true"/>
+		<dynamicField name="*_binary_s_mv" type="binary" indexed="false" stored="true" multiValued="true"/>
+		<dynamicField name="*_binary_f_mv" type="binary" indexed="true" stored="true" multiValued="true"/>
+		
+		<dynamicField name="*_str" type="str" indexed="true" stored="false" multiValued="false"/>
+		<dynamicField name="*_str_s" type="str" indexed="false" stored="true" multiValued="false"/>
+		<dynamicField name="*_str_f" type="str" indexed="true" stored="true" multiValued="false"/>
+		<dynamicField name="*_str_mv" type="str" indexed="true" stored="false" multiValued="true"/>
+		<dynamicField name="*_str_s_mv" type="str" indexed="false" stored="true" multiValued="true"/>
+		<dynamicField name="*_str_f_mv" type="str" indexed="true" stored="true" multiValued="true"/>
+
+		<dynamicField name="*_strru" type="strru" indexed="true" stored="false" multiValued="false"/>
+		<dynamicField name="*_strru_s" type="strru" indexed="false" stored="true" multiValued="false"/>
+		<dynamicField name="*_strru_f" type="strru" indexed="true" stored="true" multiValued="false"/>
+		<dynamicField name="*_strru_mv" type="strru" indexed="true" stored="false" multiValued="true"/>
+		<dynamicField name="*_strru_s_mv" type="strru" indexed="false" stored="true" multiValued="true"/>
+		<dynamicField name="*_strru_f_mv" type="strru" indexed="true" stored="true" multiValued="true"/>
+
+		<dynamicField name="*_unt" type="unt" indexed="true" stored="false" multiValued="false"/>
+		<dynamicField name="*_unt_s" type="unt" indexed="false" stored="true" multiValued="false"/>
+		<dynamicField name="*_unt_f" type="unt" indexed="true" stored="true" multiValued="false"/>
+		<dynamicField name="*_unt_mv" type="unt" indexed="true" stored="false" multiValued="true"/>
+		<dynamicField name="*_unt_s_mv" type="unt" indexed="false" stored="true" multiValued="true"/>
+		<dynamicField name="*_unt_f_mv" type="unt" indexed="true" stored="true" multiValued="true"/>
+
+		<dynamicField name="*_boolean" type="boolean" indexed="true" stored="false" multiValued="false"/>
+		<dynamicField name="*_boolean_s" type="boolean" indexed="false" stored="true" multiValued="false"/>
+		<dynamicField name="*_boolean_f" type="boolean" indexed="true" stored="true" multiValued="false"/>
+		<dynamicField name="*_boolean_mv" type="boolean" indexed="true" stored="false" multiValued="true"/>
+		<dynamicField name="*_boolean_s_mv" type="boolean" indexed="false" stored="true" multiValued="true"/>
+		<dynamicField name="*_boolean_f_mv" type="boolean" indexed="true" stored="true" multiValued="true"/>
+		
+		<dynamicField name="*_int" type="int" indexed="true" stored="false" multiValued="false"/>
+		<dynamicField name="*_int_s" type="int" indexed="false" stored="true" multiValued="false"/>
+		<dynamicField name="*_int_f" type="int" indexed="true" stored="true" multiValued="false"/>
+		<dynamicField name="*_int_mv" type="int" indexed="true" stored="false" multiValued="true"/>
+		<dynamicField name="*_int_s_mv" type="int" indexed="false" stored="true" multiValued="true"/>
+		<dynamicField name="*_int_f_mv" type="int" indexed="true" stored="true" multiValued="true"/>
+		
+		<dynamicField name="*_long" type="long" indexed="true" stored="false" multiValued="false"/>
+		<dynamicField name="*_long_s" type="long" indexed="false" stored="true" multiValued="false"/>
+		<dynamicField name="*_long_f" type="long" indexed="true" stored="true" multiValued="false"/>
+		<dynamicField name="*_long_mv" type="long" indexed="true" stored="false" multiValued="true"/>
+		<dynamicField name="*_long_s_mv" type="long" indexed="false" stored="true" multiValued="true"/>
+		<dynamicField name="*_long_f_mv" type="long" indexed="true" stored="true" multiValued="true"/>
+
+		<dynamicField name="*_float" type="float" indexed="true" stored="false" multiValued="false"/>
+		<dynamicField name="*_float_s" type="float" indexed="false" stored="true" multiValued="false"/>
+		<dynamicField name="*_float_f" type="float" indexed="true" stored="true" multiValued="false"/>
+		<dynamicField name="*_float_mv" type="float" indexed="true" stored="false" multiValued="true"/>
+		<dynamicField name="*_float_s_mv" type="float" indexed="false" stored="true" multiValued="true"/>
+		<dynamicField name="*_float_f_mv" type="float" indexed="true" stored="true" multiValued="true"/>
+
+		<dynamicField name="*_double" type="double" indexed="true" stored="false" multiValued="false"/>
+		<dynamicField name="*_double_s" type="double" indexed="false" stored="true" multiValued="false"/>
+		<dynamicField name="*_double_f" type="double" indexed="true" stored="true" multiValued="false"/>
+		<dynamicField name="*_double_mv" type="double" indexed="true" stored="false" multiValued="true"/>
+		<dynamicField name="*_double_s_mv" type="double" indexed="false" stored="true" multiValued="true"/>
+		<dynamicField name="*_double_f_mv" type="double" indexed="true" stored="true" multiValued="true"/>
+
+		<dynamicField name="*_date" type="date" indexed="true" stored="false" multiValued="false"/>
+		<dynamicField name="*_date_s" type="date" indexed="false" stored="true" multiValued="false"/>
+		<dynamicField name="*_date_f" type="date" indexed="true" stored="true" multiValued="false"/>
+		<dynamicField name="*_date_mv" type="date" indexed="true" stored="false" multiValued="true"/>
+		<dynamicField name="*_date_s_mv" type="date" indexed="false" stored="true" multiValued="true"/>
+		<dynamicField name="*_date_f_mv" type="date" indexed="true" stored="true" multiValued="true"/>
+
+		<dynamicField name="*_random" type="random" indexed="true" stored="false" multiValued="false"/>
+		<dynamicField name="*_random_f" type="random" indexed="true" stored="true" multiValued="false"/>
+		
+		<!-- multi-valued field  size -->
+		<dynamicField name="*_size" type="int" indexed="true" stored="false"/>
+		
+		<dynamicField name="*_ignored" type="ignored" />
+		
+		<dynamicField name="*" type="str" multiValued="true" indexed="true" stored="false" />
+	</fields>
+
+	<uniqueKey>pk</uniqueKey>
+
+	<copyField source="filename_str_f" dest="metadata" maxChars="256" />
+	<copyField source="location_str" dest="metadata" maxChars="4096" />
+	<copyField source="isbn_str_f" dest="metadata" maxChars="256" />
+	<copyField source="title_str_f" dest="metadata" maxChars="4096" />
+	<copyField source="annotation_str" dest="metadata" maxChars="4096" />
+	<copyField source="autors_str_f" dest="metadata" maxChars="4096" />
+	
+	<copyField source="filename_str_f" dest="metadataRu" maxChars="256" />
+	<copyField source="filenameRu_strru" dest="metadataRu" maxChars="256" />
+	<copyField source="location_str" dest="metadataRu" maxChars="4096" />
+	<copyField source="isbn_str_f" dest="metadataRu" maxChars="256" />
+	<copyField source="title_str_f" dest="metadataRu" maxChars="4096" />
+	<copyField source="titleRu_strru" dest="metadataRu" maxChars="4096" />
+	<copyField source="annotation_str" dest="metadataRu" maxChars="4096" />
+	<copyField source="annotationRu_strru" dest="metadataRu" maxChars="4096" />
+	<copyField source="autors_str_f" dest="metadataRu" maxChars="4096" />
+	<copyField source="autorsRu_str" dest="metadataRu" maxChars="4096" />
+	
+	<copyField source="Book_filename_str_f" dest="text" maxChars="256" />
+	<copyField source="*" dest="text" maxChars="800" />
+</schema>
+

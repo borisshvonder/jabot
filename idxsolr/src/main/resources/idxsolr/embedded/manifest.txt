@@ -1,0 +1,16 @@
+./core0/core.properties
+./core0/conf/synonyms.txt
+./core0/conf/spellings.txt
+./core0/conf/scripts.conf
+./core0/conf/stopwords.txt
+./core0/conf/empty.txt
+./core0/conf/protwords.txt
+./core0/conf/wdfftypes.txt
+./core0/conf/elevate.xml
+./core0/conf/schema.xml
+./core0/conf/mapping-ISOLatin1Accent.txt
+./core0/conf/stopwords_en.txt
+./core0/conf/solrconfig.xml
+./core0/conf/mapping-FoldToASCII.txt
+./solr.xml
+./manifest.txt

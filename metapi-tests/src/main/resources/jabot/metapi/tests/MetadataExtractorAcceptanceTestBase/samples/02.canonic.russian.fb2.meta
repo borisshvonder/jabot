@@ -1,0 +1,9 @@
+Content-Type=application/x-fictionbook+xml
+Content-Length=29821
+Content-Encoding=UTF-8
+Extracted-Text_atLeast=256
+Authors=[Лев Николаевич Толстой, GribUser http://www.gribuser.ru grib@gribuser.ru]
+Title=Война и мир
+Years=[1957]
+# cat 02.canonic.russian.fb2 | openssl sha1
+SHA-1=0ea92f426be07f020cfcdafd18a259e4a5e31dd1

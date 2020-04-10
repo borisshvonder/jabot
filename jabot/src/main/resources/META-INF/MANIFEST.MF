@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Main-Class: jabot.jabot.Jabot
+Built-By: Швондер
+Jabot-Version: ${project.version}
+Build-Timestamp: ${jabot.build.timestamp}
+Build-Jdk: ${java.version}
+Build-Os: ${os.name}
+Build-Os-Version: ${os.version}
+Build-Os-Arch: ${os.arch}

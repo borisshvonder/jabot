@@ -1,0 +1,6 @@
+- ingesting errors to file
+- шалава
+- C++
+
+NEVER:
+- proguard & distribute channel

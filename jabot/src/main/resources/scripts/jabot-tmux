@@ -1,0 +1,2 @@
+tmux new-session -s jabot \
+	java -Xms512M -Xmx2G -jar jabot-1.0.jar
