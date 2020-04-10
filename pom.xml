@@ -46,7 +46,7 @@
 		<tika.version>1.14</tika.version>
 		<reflections.version>0.9.11</reflections.version>
 		<tagsoup.version>1.2.1</tagsoup.version>
-		<solr.version>7.0.1</solr.version>
+		<solr.version>8.5.0</solr.version>
 		<beanutils.version>1.9.3</beanutils.version>
 		<jbig2-imageio.version>2.0</jbig2-imageio.version>
 	</properties>
