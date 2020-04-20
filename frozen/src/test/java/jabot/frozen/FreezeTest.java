@@ -19,7 +19,7 @@ public class FreezeTest {
 	
 
 	private static class FrozenObj implements Freezing<FrozenObj> {
-		private transient boolean frozen;
+		private transient volatile boolean frozen;
 		
 		@Override
 		public boolean isFrozen() {

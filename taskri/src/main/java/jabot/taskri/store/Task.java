@@ -45,7 +45,7 @@ public class Task implements Freezing<Task>{
 	private Progress progress;
 	
 	/** if true, any modification will throw FrozenException **/
-	private transient boolean frozen;
+	private transient volatile boolean frozen;
 	
 	@Override
 	public boolean isFrozen() {

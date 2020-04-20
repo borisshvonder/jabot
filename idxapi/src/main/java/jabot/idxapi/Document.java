@@ -16,7 +16,7 @@ public class Document implements Freezing<Document> {
 	private final List<FieldValue> fields = new LinkedList<>();
 	private final List<FieldValue> fieldsRO = Collections.unmodifiableList(fields);
 	
-	private boolean frozen;
+	private volatile boolean frozen;
 
 	public Document(final Untokenized pk) {
 		Validate.notNull(pk, "pk cannot be null");
